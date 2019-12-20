@@ -1,0 +1,62 @@
+TASK A 
+Lang: C#
+Score 100
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Console;
+
+namespace taskA
+{
+class Program
+{
+static void Main(string[] args)
+{
+int i, j;
+
+string[] input = ReadLine().Split(' ');
+int M = int.Parse(input[0]); // flats per floor
+int N = int.Parse(input[1]); // number of floors
+int K = int.Parse(input[2]); // windows per floor
+
+int[] P = new int[M]; // windows in each flat
+bool[,] F = new bool[K, N]; // lit windows
+
+input = ReadLine().Split(' ');
+for (i = 0; i < M; i++) P[i] = int.Parse(input[i]);
+for (j = N - 1; j >= 0; j--)
+{
+input = ReadLine().Split(' ');
+for (i = 0; i < K; i++) F[i, j] = (input[i] == "0") ? false : true;
+}
+
+int count = 0, flat = 0, next = 0;
+List<int> flats = new List<int>();
+
+for (i = 0; i < N; i++)
+{
+flat = 0;
+next = P[flat];
+for (j = 0; j < K; j++)
+{
+if (F[j, i]) count++;
+next--;
+if (next == 0)
+{
+flat++;
+if (count == 0) flats.Add(i * M + flat);
+count = 0;
+if (j != K - 1) next = P[flat];
+}
+}
+}
+flats.Sort();
+WriteLine("{0}", flats.Count);
+foreach (int x in flats) Write("{0} ", x);
+//ReadKey();
+}
+}
+}

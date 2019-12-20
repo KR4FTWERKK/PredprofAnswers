@@ -1,0 +1,83 @@
+TASK C 
+Lang: C 4.9
+Score: 94
+
+#include <stdlib.h>
+
+
+//void sort(int* p, int n)
+//{
+//        int temp;
+//        for (int c = 0; c < n - 1; c++)
+//        {
+//                for (int d = 0; d < n - c - 1; d++)
+//                {
+//                        if (p[d] > p[d + 1]) 
+//                        {
+//                                temp = p[d];
+//                                p[d] = p[d + 1];
+//                                p[d + 1] = temp;
+//                        }
+//                }
+//        }
+//}
+
+
+char takeSkill(int sip, int* s, int i, int* bs)
+{
+        for (int k = sip - 1; k <= sip + 1; k++)
+        {
+                if (k <= 0 || k > 500000|| k<= *bs)
+                {
+                        continue;
+                }
+                s[i] = k;
+                *bs = k;
+                return 1;
+        }
+
+
+        s[i] = 0;
+        return 0;
+}
+
+
+int compare(const void * x1, const void * x2)   // ôóíêöèÿ ñðàâíåíèÿ ýëåìåíòîâ ìàññèâà
+{
+        return (*(int*)x1 - *(int*)x2);              // åñëè ðåçóëüòàò âû÷èòàíèÿ ðàâåí 0, òî ÷èñëà ðàâíû, < 0: x1 < x2; > 0: x1 > x2
+}
+
+
+int main()
+{
+        int n;
+
+
+        scanf("%d", &n);
+
+
+        int* p = (int*)malloc(sizeof(int)*n);
+
+
+        for (int i = 0; i < n; i++)
+        {
+                scanf("%d", p+i);
+        }
+
+
+        qsort(p, n, sizeof(int), compare);
+        //sort(p, n);
+        
+        int* s = (int*)malloc(sizeof(int)*n);
+        int sum = 0, bs = 0;
+
+
+        for (int i = 0; i < n; i++)
+        {
+                sum += takeSkill(p[i], s, i,&bs);
+        }
+
+
+        printf("%d", sum);
+    return 0;
+}

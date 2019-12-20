@@ -1,0 +1,148 @@
+TASK D 
+Lang: C#
+Score: 95
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Console;
+
+namespace taskB
+{
+class Program
+{
+class person
+{
+public string name;
+public string surname;
+public int height;
+public int weight;
+public int dheight;
+public int dweight;
+
+public person(string name, string surname, int height, int weight)
+{
+this.name = name;
+this.surname = surname;
+this.height = height;
+this.weight = weight;
+dheight = Math.Abs(180 - height);
+dweight = Math.Abs(75 - weight);
+}
+
+}
+
+static void Main()
+{
+bool flag = false;
+int j = 0;
+int n = int.Parse(ReadLine());
+string[] input;
+List<person> people_list = new List<person>();
+List<string[]> inputs = new List<string[]>();
+for (int i = 0; i < n; i++)
+{
+input = ReadLine().Split(' ');
+inputs.Add(input);
+if (int.Parse(input[3]) <= 75)
+{
+flag = true;
+people_list.Add(new person(input[0], input[1], int.Parse(input[2]), int.Parse(input[3])));
+}
+}
+if (!flag)
+{
+for (int i = 0; i < n; i++)
+people_list.Add(new person((inputs[i])[0], (inputs[i])[1], int.Parse((inputs[i])[2]), int.Parse((inputs[i])[3])));
+}
+person[] people_array = people_list.ToArray();
+int last = people_array.Length;
+
+bool surname_first = false;
+bool name_first = false;
+int temp_strlength = 0;
+
+for (bool sorted = last == 0; !sorted; —last)
+{
+sorted = true;
+for (int i = 1; i < last; ++i)
+{
+if (people_array[i - 1].dheight > people_array[i].dheight)
+{
+sorted = false;
+
+person tmp = people_array[i - 1];
+people_array[i - 1] = people_array[i];
+people_array[i] = tmp;
+}
+else if (people_array[i - 1].dheight == people_array[i].dheight && people_array[i - 1].dweight > people_array[i].dweight)
+{
+sorted = false;
+
+person tmp = people_array[i - 1];
+people_array[i - 1] = people_array[i];
+people_array[i] = tmp;
+}
+surname_first = false;
+name_first = false;
+if (people_array[i - 1].dheight == people_array[i].dheight
+&& people_array[i - 1].dweight == people_array[i].dweight)
+{
+if (people_array[i - 1].surname.Length < people_array[i].surname.Length)
+temp_strlength = people_array[i - 1].surname.Length;
+else
+temp_strlength = people_array[i].surname.Length;
+while (j < i)
+{
+if (Convert.ToChar(people_array[i - 1].surname[j]).CompareTo(Convert.ToChar(people_array[i].surname[j])) > 0)
+{
+surname_first = true;
+break;
+}
+j++;
+}
+if (surname_first)
+{
+sorted = false;
+
+person tmp = people_array[i - 1];
+people_array[i - 1] = people_array[i];
+people_array[i] = tmp;
+}
+if (!surname_first)
+{
+j = 0;
+if (people_array[i - 1].name.Length < people_array[i].name.Length)
+temp_strlength = people_array[i - 1].name.Length;
+else
+temp_strlength = people_array[i].name.Length;
+while (j < i)
+{
+if (Convert.ToChar(people_array[i - 1].name[j]).CompareTo(Convert.ToChar(people_array[i].name[j])) > 0)
+{
+name_first = true;
+break;
+}
+j++;
+}
+if (name_first)
+{
+sorted = false;
+
+person tmp = people_array[i - 1];
+people_array[i - 1] = people_array[i];
+people_array[i] = tmp;
+}
+}
+}
+}
+}
+foreach (person k in people_array)
+{
+WriteLine("{0} {1}", k.name, k.surname);
+}
+}
+}
+}

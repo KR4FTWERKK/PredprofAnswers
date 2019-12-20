@@ -1,0 +1,57 @@
+TASK B 
+Lang: C++ 11 4.9
+Score: 66 
+
+#include <string>
+#include <list>
+#include <iostream>
+using namespace std;
+
+int main()
+{
+int i = 0, j = 0, mul = 1, k = 0;
+string temp;
+bool flag1;
+
+int N;
+cin >> N;
+string *input = new string[N];
+while (i < N && cin >> input[i])
+{
+i++;
+}
+
+int *codes = new int[N];
+list<int> ucodes;
+
+for (i = 0; i < N; i++)
+{
+mul = 1;
+temp = input[i];
+for (j = 0; j < temp.length(); j++)
+{
+if (temp[j] == 'A') mul *= 2;
+if (temp[j] == 'C') mul *= 3;
+if (temp[j] == 'G') mul *= 5;
+if (temp[j] == 'T') mul *= 7;
+}
+codes[i] = mul;
+flag1 = true;
+for (int k : ucodes)
+{
+if (mul == k) flag1 = false;
+}
+if (flag1) ucodes.push_back(mul);
+}
+
+cout << ucodes.size() << "\n";
+
+for (int k : ucodes)
+{
+for (i = 0; i < N; i++)
+if (codes[i] == k)
+cout << input[i] + " ";
+cout << "\n";
+}
+
+}

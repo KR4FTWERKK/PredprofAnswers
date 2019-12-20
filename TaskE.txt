@@ -1,0 +1,76 @@
+TASK E 
+Lang: C#
+Score 100
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp2
+{
+class Program
+{
+static void Main(string[] args)
+{
+List<List<int» mas = new List<List<int»();
+List<List<int» mas_y = new List<List<int»();
+
+mas_y.Add(new List<int>());
+mas_y.Add(new List<int>());
+mas_y.Add(new List<int>());
+mas_y.Add(new List<int>());
+
+//Array input
+for (int i = 0; i<4; i++)
+{
+string[] words = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+mas.Add(new List<int>());
+for (int j = 0; j < 4; j++)
+if (Int32.Parse(words[j]) != 0)
+{
+mas_y[j].Add(Int32.Parse(words[j]));
+mas[i].Add(Int32.Parse(words[j]));
+}
+}
+
+int points_x = 0;
+int points_y = 0;
+
+foreach (List<int> list in mas)
+{
+if (list.Count <= 1) continue;
+for (int i = 0; i < (list.Count - 1); i++)
+{
+if (list[i] == list[i + 1])
+{
+points_x = points_x + list[i] * 2;
+i = i + 1;
+}
+}
+}
+
+foreach (List<int> list in mas_y)
+{
+if (list.Count <= 1) continue;
+for (int i = 0; i < (list.Count - 1); i++)
+{
+if (list[i] == list[i + 1])
+{
+points_y = points_y + list[i] * 2;
+i = i + 1;
+}
+}
+}
+
+
+if (points_x > points_y)
+Console.WriteLine(points_x);
+else Console.WriteLine(points_y);
+
+
+Console.ReadLine();
+}
+}
+}
